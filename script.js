@@ -1,5 +1,4 @@
 $(function() {
-    // Реструктуризація слів за рівнями складності
     const wordLevels = {
         "A1": [
             {en: "table", ua: ["стіл"]},
@@ -64,7 +63,7 @@ $(function() {
         const percent = (correct / currentTotalQuestions) * 100;
         const currentLevel = $("#difficulty").val();
 
-        if (percent >= 90) level = `Супер! Рівень ${currentLevel} підкорено!`;
+        if (percent >= 90) level = `Супер! Рівень ${currentLevel} підкорено!Далі – більше!`;
         else if (percent >= 70) level = `Добре, ти молодець! Допрацюй рівень ${currentLevel}.`;
         else if (percent >= 50) level = "Ти можеш набагато краще!";
         else level = "Потрібно більше практики! Все вийде в наступний раз!";
@@ -73,27 +72,18 @@ $(function() {
             Ви переклали ${correct} із ${currentTotalQuestions} слів рівня ${currentLevel}!<br>
             Ваш результат: <b>${level}</b>
         `);
-
-        // ВИПРАВЛЕНО: Відображення модального вікна з анімацією
         const $modal = $("#resultModal");
-        // Спочатку робимо його видимим, а потім анімуємо прозорість
         $modal.css({ opacity: 0, visibility: 'visible' }).animate({ opacity: 1 }, 400);
     }
-
     $("#checkBtn").click(function() {
         const answer = $("#translation").val().trim().toLowerCase();
-        
         if (current >= TOTAL_QUESTIONS) return; 
-
         if (answer === "") {
-            console.warn("Будь ласка, введіть переклад!"); 
+            console.warn("Будь ласка, введіть переклад!Обманути не вийде)"); 
             return;
         }
-
         const correctAnswers = shuffled[current].ua.map(t => t.toLowerCase().trim());
-        
         let isCorrect = correctAnswers.includes(answer);
-        
         if (isCorrect) {
             correct++;
             $("#correct").text(correct);
@@ -101,7 +91,6 @@ $(function() {
             wrong++;
             $("#wrong").text(wrong);
         }
-        
         $("#translation").val("");
 
         current++;
@@ -109,16 +98,12 @@ $(function() {
     });
 
     $("#restartBtn").click(function() {
-        // ВИПРАВЛЕНО: Приховування модального вікна з анімацією
         const $modal = $("#resultModal");
         $modal.animate({ opacity: 0 }, 300, function() {
-            // Після завершення анімації робимо його невидимим
             $modal.css('visibility', 'hidden'); 
             startGame();
         });
     });
-    
-    // Обробник зміни рівня складності - запускає нову гру
     $("#difficulty").on("change", function() {
         console.log(`Розпочато нову гру з ${TOTAL_QUESTIONS} слів рівня: ${$(this).val()}!`);
         startGame();
