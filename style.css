@@ -11,8 +11,6 @@ body {
     padding: 20px;
     color: #333; 
 }
-
-/* --- Стилі для селектора складності --- */
 .difficulty-select {
     margin-bottom: 25px; 
     padding: 15px 30px; 
@@ -30,7 +28,6 @@ body {
     text-align: center; 
     justify-content: center; 
 }
-
 .difficulty-select label {
     color: #3f2b96;
 }
@@ -50,8 +47,6 @@ body {
     box-shadow: 0 0 10px rgba(247, 121, 125, 0.7);
     outline: none;
 }
-
-/* --- Стилі для картки --- */
 .card {
     background: rgba(255, 255, 255, 0.95); 
     border-radius: 20px; 
@@ -89,7 +84,6 @@ input:focus {
     box-shadow: 0 0 10px rgba(63, 43, 150, 0.4);
     outline: none;
 }
-
 button {
     margin-top: 25px;
     padding: 12px 35px;
@@ -103,13 +97,11 @@ button {
     box-shadow: 0 5px 20px rgba(49, 0, 90, 0.3);
     transition: all 0.3s ease;
 }
-
 button:hover {
     background: linear-gradient(45deg, #a8c0ff, #3f2b96); 
     box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
 }
-
 .stats {
     margin-top: 25px;
     font-size: 17px;
@@ -118,33 +110,24 @@ button:hover {
     display: flex;
     justify-content: space-around;
 }
-
 .stats span {
     font-weight: 700;
     color: #3f2b96;
 }
-
-/* --- Стилі для модального вікна (ВИПРАВЛЕНО ЦЕНТРУВАННЯ) --- */
 .modal {
-    position: fixed;
+    position: flex;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background: rgba(63, 43, 150, 0.9); 
-    z-index: 1000;
-
-    /* КЛЮЧОВІ ВИПРАВЛЕННЯ ДЛЯ ЦЕНТРУВАННЯ */
     display: flex; 
     justify-content: center; 
     align-items: center;
-
-    /* Використовуємо це для jQuery fadeIn/fadeOut */
     opacity: 0;
     visibility: hidden; 
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-
 .modal-content {
     background: white;
     padding: 40px;
@@ -154,17 +137,13 @@ button:hover {
     width: 90%;
     box-shadow: 0 15px 50px rgba(0,0,0,0.5);
 }
-
 #summary {
     font-size: 1.1em;
     line-height: 1.6;
 }
-
 #restartBtn {
     margin-top: 30px;
 }
-
-/* --- Медіа-запити для мобільних пристроїв --- */
 @media (max-width: 550px) {
     .difficulty-select {
         flex-direction: column;
