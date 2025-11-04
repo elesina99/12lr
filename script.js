@@ -42,18 +42,30 @@ $(function() {
     let current = 0;
     let correct = 0;
     let wrong = 0;
-    const TOTAL_QUESTIONS = 10; 
+    const TOTAL_QUESTIONS = 10;
 
     function shuffle(array) {
         return array.sort(() => Math.random() - 0.5);
     }
+    
+    // Нова функція для візуальної валідації порожнього поля
+    function showValidationWarning(message) {
+        const $translationInput = $("#translation");
+        $translationInput.css("border-color", "#e74c3c"); // Червона рамка
+        $translationInput.attr("placeholder", message); // Повідомлення про помилку
+        
+        setTimeout(() => {
+            $translationInput.css("border-color", "#ccc"); // Повертаємо початковий колір
+            $translationInput.attr("placeholder", "Введіть переклад...");
+        }, 1500); 
+    }
 
     function nextWord() {
-        if (current < TOTAL_QUESTIONS) {
+        if (current < shuffled.length) {
             $("#word").text(shuffled[current].en);
             $("#step").text(current + 1);
         } else {
-            showResults();
+            showResults(); // Виводимо результати, коли слова закінчились
         }
     }
 
@@ -63,7 +75,7 @@ $(function() {
         const percent = (correct / currentTotalQuestions) * 100;
         const currentLevel = $("#difficulty").val();
 
-        if (percent >= 90) level = `Супер! Рівень ${currentLevel} підкорено!Далі – більше!`;
+        if (percent >= 90) level = `Супер! Рівень ${currentLevel} підкорено! Далі – більше!`;
         else if (percent >= 70) level = `Добре, ти молодець! Допрацюй рівень ${currentLevel}.`;
         else if (percent >= 50) level = "Ти можеш набагато краще!";
         else level = "Потрібно більше практики! Все вийде в наступний раз!";
@@ -72,33 +84,49 @@ $(function() {
             Ви переклали ${correct} із ${currentTotalQuestions} слів рівня ${currentLevel}!<br>
             Ваш результат: <b>${level}</b>
         `);
-        $("#resultModal").fadeIn(400); 
+        $("#resultModal").fadeIn(400);
     }
+    
     $("#checkBtn").click(function() {
-        const answer = $("#translation").val().trim().toLowerCase();
-        if (current >= TOTAL_QUESTIONS) return; 
+        const $translationInput = $("#translation");
+        const answer = $translationInput.val().trim().toLowerCase();
+        
+        // **Валідація пустого поля**
         if (answer === "") {
-            console.warn("Будь ласка, введіть переклад!Обманути не вийде)"); 
-            return;
+            showValidationWarning("Будь ласка, введіть переклад!");
+            return; 
         }
+        
+        if (current >= shuffled.length) return; // Захист від зайвих кліків
+        
         const correctAnswers = shuffled[current].ua.map(t => t.toLowerCase().trim());
         let isCorrect = correctAnswers.includes(answer);
+        
+        // **Візуальний зворотний зв'язок**
         if (isCorrect) {
             correct++;
+            $translationInput.addClass("correct-answer");
             $("#correct").text(correct);
         } else {
             wrong++;
+            $translationInput.addClass("wrong-answer");
             $("#wrong").text(wrong);
         }
-        $("#translation").val("");
-
-        current++;
-        nextWord();
+        
+        // Перехід до наступного слова після невеликої паузи
+        setTimeout(() => {
+            // Очищення інпута та видалення класів зворотного зв'язку
+            $translationInput.val("").removeClass("correct-answer wrong-answer"); 
+            
+            current++;
+            nextWord();
+        }, 500); 
     });
 
     $("#restartBtn").click(function() {
         $("#resultModal").fadeOut(300, startGame);
     });
+    
     $("#difficulty").on("change", function() {
         console.log(`Розпочато нову гру з ${TOTAL_QUESTIONS} слів рівня: ${$(this).val()}!`);
         startGame();
@@ -109,8 +137,9 @@ $(function() {
         const availableWords = wordLevels[selectedLevel];
         
         const wordsToTake = Math.min(TOTAL_QUESTIONS, availableWords.length);
-
-        shuffled = shuffle([...availableWords]).slice(0, wordsToTake); 
+        
+        // Перемішуємо та беремо потрібну кількість слів
+        shuffled = shuffle([...availableWords]).slice(0, wordsToTake);
         
         const currentTotal = shuffled.length;
 
@@ -118,16 +147,16 @@ $(function() {
         correct = 0;
         wrong = 0;
         
+        // Оновлення лічильників
         $("#correct").text(0);
         $("#wrong").text(0);
-        $("#total").text(currentTotal); 
+        $("#total").text(currentTotal);
         $("#step").text(1);
         
-        $("#translation").val("").focus(); 
+        $("#translation").val("").focus();
         nextWord();
     }
 
-    $("#total").text(TOTAL_QUESTIONS);
-    
-    startGame(); 
+    // Ініціалізація гри
+    startGame();
 });
