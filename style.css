@@ -1,7 +1,7 @@
 body {
     font-family: 'Times New Roman', Times, serif;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Змінимо напрямок для розміщення селектора зверху */
     align-items: center;
     justify-content: center;
     min-height: 100vh;
@@ -10,6 +10,34 @@ body {
     padding: 20px;
     color: #333; 
 }
+
+/* Стилі для селектора складності */
+.difficulty-select {
+    margin-bottom: 20px;
+    padding: 15px 30px; /* Збільшимо падінг */
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 15px; /* Простір між елементами */
+    align-items: center;
+}
+
+#difficulty {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid #000000;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+}
+
+#difficulty:focus {
+    border-color: #3f2b96;
+    box-shadow: 0 0 5px rgba(63, 43, 150, 0.5);
+    outline: none;
+}
+
 .card {
     background: rgba(255, 255, 255, 0.95); 
     border-radius: 20px; 
@@ -24,6 +52,8 @@ body {
 .card:hover {
     box-shadow: 0 25px 40px rgba(0, 0, 0, 0.9); 
 }
+
+/* ... Решта стилів залишаються без змін ... */
 
 input {
     width: 100%;
@@ -65,7 +95,7 @@ button:hover {
 }
 
 .modal {
-    display: flex;
+    display: none; /* Змінено для кращої сумісності з jQuery */
     position: fixed;
     left: 0;
     top: 0;
@@ -87,30 +117,30 @@ button:hover {
     animation: fadeInModal 0.4s ease;
 }
 @media (max-width: 480px) {
-  .card {
-    padding: 25px;
-    max-width: 90%;
-  }
-
-  input, button {
-    font-size: 16px;
-    padding: 10px 12px;
-  }
-
-  h1 {
-    font-size: 22px;
-  }
-
-  h2 {
-    font-size: 20px;
-  }
-
-  .stats {
-    font-size: 15px;
-  }
-
-  .modal-content {
-    padding: 25px;
-    width: 90%;
-  }
+    .card {
+        padding: 25px;
+        max-width: 90%;
+    }
+    .difficulty-select {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+    input, button, #difficulty {
+        font-size: 16px;
+        padding: 10px 12px;
+    }
+    h1 {
+        font-size: 22px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    .stats {
+        font-size: 15px;
+    }
+    .modal-content {
+        padding: 25px;
+        width: 90%;
+    }
 }
