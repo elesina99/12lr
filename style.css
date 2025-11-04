@@ -1,42 +1,52 @@
 body {
     font-family: 'Times New Roman', Times, serif;
     display: flex;
-    flex-direction: column; /* Змінимо напрямок для розміщення селектора зверху */
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    /* Яскравий градієнтний фон */
     background: linear-gradient(135deg, #a8c0ff, #3f2b96); 
     margin: 0;
     padding: 20px;
     color: #333; 
 }
 
-/* Стилі для селектора складності */
+/* --- Стилі для селектора складності --- */
 .difficulty-select {
-    margin-bottom: 20px;
-    padding: 15px 30px; /* Збільшимо падінг */
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px; /* Більший відступ від картки */
+    padding: 15px 30px; 
+    background: rgba(255, 255, 255, 0.95); /* Світлий фон */
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
     display: flex;
-    gap: 15px; /* Простір між елементами */
+    gap: 15px; 
     align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.difficulty-select label {
+    color: #3f2b96;
 }
 
 #difficulty {
-    padding: 8px 15px;
-    border-radius: 5px;
-    border: 1px solid #000000;
-    font-size: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 2px solid #3f2b96; /* Акцентний колір рамки */
+    font-size: 17px;
     cursor: pointer;
-    background-color: #f9f9f9;
+    background-color: #f0f0ff; /* Дуже світлий фон для селектора */
+    transition: all 0.3s ease;
 }
 
 #difficulty:focus {
-    border-color: #3f2b96;
-    box-shadow: 0 0 5px rgba(63, 43, 150, 0.5);
+    border-color: #f7797d; /* Рожевий акцент при фокусі */
+    box-shadow: 0 0 10px rgba(247, 121, 125, 0.7);
     outline: none;
 }
+/* -------------------------------------- */
+
 
 .card {
     background: rgba(255, 255, 255, 0.95); 
@@ -47,44 +57,53 @@ body {
     max-width: 450px; 
     width: 100%;
     text-align: center;
+    transition: box-shadow 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.9); 
+    box-shadow: 0 25px 40px rgba(0, 0, 0, 0.3); /* Виразніша тінь при наведенні */
 }
 
-/* ... Решта стилів залишаються без змін ... */
+#word {
+    font-size: 2em;
+    color: #3f2b96; /* Акцентний колір для слова */
+    margin-bottom: 15px;
+}
 
 input {
     width: 100%;
-    padding: 12px 15px;
+    padding: 14px 15px;
     margin-top: 10px;
     border-radius: 10px;
-    border: 1px solid #000000;
+    border: 2px solid #ccc; /* Трохи товстіша рамка */
     font-size: 18px;
+    box-sizing: border-box; /* Важливо для коректного відображення width: 100% */
 }
 
 input:focus {
-    border-color: #000000;
-    box-shadow: 0 0 8px rgba(247, 121, 125, 0.9);
+    border-color: #3f2b96;
+    box-shadow: 0 0 10px rgba(63, 43, 150, 0.4);
+    outline: none;
 }
 
 button {
     margin-top: 25px;
     padding: 12px 35px;
-    border: 1px solid #000000;
-    background: linear-gradient(45deg, #8383a2, #616177); 
+    border: none; /* Забираємо стандартну рамку */
+    border-radius: 10px;
+    background: linear-gradient(45deg, #3f2b96, #a8c0ff); /* Градієнт */
     color: white;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 5px 35px rgba(49, 0, 90, 0.4);
+    box-shadow: 0 5px 20px rgba(49, 0, 90, 0.3);
     transition: all 0.3s ease;
 }
 
 button:hover {
-    background: linear-gradient(45deg, #310062, #4b0082);
-    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.6);
+    background: linear-gradient(45deg, #a8c0ff, #3f2b96); /* Зворотний градієнт при наведенні */
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 .stats {
@@ -92,18 +111,27 @@ button:hover {
     font-size: 17px;
     font-weight: 500;
     color: #555;
+    display: flex;
+    justify-content: space-around;
 }
 
+.stats span {
+    font-weight: 700;
+    color: #3f2b96;
+}
+
+/* --- Стилі для модального вікна --- */
 .modal {
-    display: none; /* Змінено для кращої сумісності з jQuery */
+    display: none; 
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(63, 43, 150, 0.85); 
+    background: rgba(63, 43, 150, 0.9); /* Темніший оверлей */
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
@@ -113,28 +141,42 @@ button:hover {
     text-align: center;
     max-width: 450px;
     width: 90%;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+    /* Анімація появи (якщо підключити її у body) */
     animation: fadeInModal 0.4s ease;
 }
-@media (max-width: 480px) {
-    .card {
-        padding: 25px;
-        max-width: 90%;
+
+#summary {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+#restartBtn {
+    margin-top: 30px;
+}
+
+/* --- Медіа-запити для мобільних пристроїв --- */
+@media (max-width: 550px) {
+    body {
+        justify-content: flex-start; /* Центруємо зверху */
     }
     .difficulty-select {
         flex-direction: column;
         gap: 10px;
         padding: 15px;
+        width: 90%;
+        max-width: 450px;
+    }
+    .card {
+        padding: 25px;
+        max-width: 90%;
     }
     input, button, #difficulty {
         font-size: 16px;
         padding: 10px 12px;
     }
-    h1 {
-        font-size: 22px;
-    }
-    h2 {
-        font-size: 20px;
+    #word {
+        font-size: 1.5em;
     }
     .stats {
         font-size: 15px;
