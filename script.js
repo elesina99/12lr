@@ -47,16 +47,14 @@ $(function() {
     function shuffle(array) {
         return array.sort(() => Math.random() - 0.5);
     }
-    
-    // Нова функція для візуальної валідації порожнього поля
     function showValidationWarning(message) {
         const $translationInput = $("#translation");
-        $translationInput.css("border-color", "#e74c3c"); // Червона рамка
-        $translationInput.attr("placeholder", message); // Повідомлення про помилку
+        $translationInput.css("border-color", "#e74c3c"); 
+        $translationInput.attr("placeholder", message); 
         
         setTimeout(() => {
-            $translationInput.css("border-color", "#ccc"); // Повертаємо початковий колір
-            $translationInput.attr("placeholder", "Введіть переклад...");
+            $translationInput.css("border-color", "#ccc"); 
+            $translationInput.attr("placeholder", "Введіть переклад...Обманути не вийде)))");
         }, 1500); 
     }
 
@@ -65,10 +63,9 @@ $(function() {
             $("#word").text(shuffled[current].en);
             $("#step").text(current + 1);
         } else {
-            showResults(); // Виводимо результати, коли слова закінчились
+            showResults(); 
         }
     }
-
     function showResults() {
         let level;
         const currentTotalQuestions = shuffled.length;
@@ -90,19 +87,14 @@ $(function() {
     $("#checkBtn").click(function() {
         const $translationInput = $("#translation");
         const answer = $translationInput.val().trim().toLowerCase();
-        
-        // **Валідація пустого поля**
         if (answer === "") {
             showValidationWarning("Будь ласка, введіть переклад!");
             return; 
         }
-        
-        if (current >= shuffled.length) return; // Захист від зайвих кліків
-        
+        if (current >= shuffled.length) return; 
         const correctAnswers = shuffled[current].ua.map(t => t.toLowerCase().trim());
         let isCorrect = correctAnswers.includes(answer);
-        
-        // **Візуальний зворотний зв'язок**
+    
         if (isCorrect) {
             correct++;
             $translationInput.addClass("correct-answer");
