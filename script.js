@@ -72,8 +72,7 @@ $(function() {
             Ви переклали ${correct} із ${currentTotalQuestions} слів рівня ${currentLevel}!<br>
             Ваш результат: <b>${level}</b>
         `);
-        const $modal = $("#resultModal");
-        $modal.css({ opacity: 0, visibility: 'visible' }).animate({ opacity: 1 }, 400);
+        $("#resultModal").fadeIn(400); 
     }
     $("#checkBtn").click(function() {
         const answer = $("#translation").val().trim().toLowerCase();
@@ -98,11 +97,7 @@ $(function() {
     });
 
     $("#restartBtn").click(function() {
-        const $modal = $("#resultModal");
-        $modal.animate({ opacity: 0 }, 300, function() {
-            $modal.css('visibility', 'hidden'); 
-            startGame();
-        });
+        $("#resultModal").fadeOut(300, startGame);
     });
     $("#difficulty").on("change", function() {
         console.log(`Розпочато нову гру з ${TOTAL_QUESTIONS} слів рівня: ${$(this).val()}!`);
