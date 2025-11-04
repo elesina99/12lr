@@ -115,7 +115,7 @@ button:hover {
     color: #3f2b96;
 }
 .modal {
-    position: flex;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
@@ -124,10 +124,8 @@ button:hover {
     display: flex; 
     justify-content: center; 
     align-items: center;
-    opacity: 0;
-    visibility: hidden; 
-    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
+
 .modal-content {
     background: white;
     padding: 40px;
