@@ -9,6 +9,15 @@
 </head>
 <body>
 
+    <div class="difficulty-select">
+        <label for="difficulty">Оберіть рівень складності:</label>
+        <select id="difficulty">
+            <option value="5">Легкий (5 слів)</option>
+            <option value="10" selected>Середній (10 слів)</option>
+            <option value="15">Складний (15 слів)</option>
+        </select>
+    </div>
+
     <div class="card">
         <h2 id="word">Слово</h2>
         <input type="text" id="translation" placeholder="Введіть переклад...">
@@ -19,7 +28,7 @@
         </div>
     </div>
 
-    <div class="modal" id="resultModal">
+    <div class="modal" id="resultModal" style="display:none;">
         <div class="modal-content">
             <h3>Результати...</h3>
             <p id="summary"></p>
